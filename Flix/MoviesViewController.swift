@@ -2,24 +2,23 @@
 //  Flix
 //
 //  Created by Daniel Cruz Castro on 9/9/21.
-//
 import UIKit
 import AlamofireImage
 
 class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     // Properties
-    var movies = [[String:Any]]() // Let array "movies" contain strings
+    var movies = [[String:Any]]() // Let array/dictionary "movies" contain strings
 
     // ------ This function loads the given code upon first boot of the View ------
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Fill in row information to tableView
         tableView.dataSource = self
         tableView.delegate = self
         
         // Do any additional setup after loading the view.
-        print("Hello")
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
@@ -34,7 +33,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                 // Input JSON results into movies array?
                 self.movies = dataDictionary["results"] as! [[String:Any]]
                 self.tableView.reloadData() // Reload the data when receiving information, as movies.count is initially set to 0.
-                print(dataDictionary)
                 
                 // TODO: Get the array of movies
                 // TODO: Store the movies in a property to use elsewhere
@@ -72,14 +70,27 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
 
-    /*
-    // MARK: - Navigation
-
+    // Navigation ---------------------------------------------------------------------------------------------
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("Loading up the details screen")
+        
+        // Identify the movie
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)!
+        let movie = movies[indexPath.row]
+        
         // Get the new view controller using segue.destination.
+        let detailsViewController = segue.destination as! MovieDetailsViewController // Cast as would give you access to generic view controller which does not have the "movie" property needed
+        
         // Pass the selected object to the new view controller.
+        detailsViewController.movie = movie // Give the view property the value of "movie" above.
+        
+        // Remove the highlight on the row after returning to the "Movies" view.
+        tableView.deselectRow(at: <#T##IndexPath#>, animated: true)
+    
+        
+        
     }
-    */
 
 }
