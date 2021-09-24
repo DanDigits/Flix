@@ -59,7 +59,7 @@ class MovieGridViewController: UIViewController, UICollectionViewDataSource, UIC
     
     // Row content; cell is sort of the content organizer for each row. Iteratively constructs rows
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieGridCell", for: <#T##IndexPath#>) as! MovieGridCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieGridCell", for: indexPath) as! MovieGridCell
         
         let movie = movies[indexPath.item]
         

@@ -87,7 +87,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         detailsViewController.movie = movie // Give the view property the value of "movie" above.
         
         // Remove the highlight on the row after returning to the "Movies" view.
-        tableView.deselectRow(at: <#T##IndexPath#>, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     
         
         
